@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class BaseRecyclerViewAdapter<DataItem> extends RecyclerView.Adapter<AdapterViewHolder> {
@@ -25,19 +26,55 @@ public abstract class BaseRecyclerViewAdapter<DataItem> extends RecyclerView.Ada
     @NonNull
     @Override
     public AdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate()
-        return null;
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(itemLayoutRes(), parent, false);
+        AdapterViewHolder adapterViewHolder = new AdapterViewHolder(itemView);
+        afterViewHolderCreated(adapterViewHolder);
+        return adapterViewHolder;
+    }
+
+    protected void afterViewHolderCreated(AdapterViewHolder adapterViewHolder){
+
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull AdapterViewHolder holder, int position) {
-
+        DataItem dataItem = mData.get(position);
+        bindDataToItem(holder, dataItem, position);
     }
+
+    protected abstract void bindDataToItem(AdapterViewHolder holder, DataItem dataItem, int position);
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData.size();
     }
+
+    public void setData(List<DataItem> data){
+        mData.clear();
+        mData.addAll(data);
+        notifyDataSetChanged();
+    }
+
+
+    public void appendData(DataItem dataItem) {
+        int insertedPos = mData.size();
+        mData.add(dataItem);
+        notifyItemInserted(insertedPos);
+    }
+
+    public void appendData(List<DataItem> dataItems){
+        mData.addAll(dataItems);
+        notifyDataSetChanged();
+    }
+
+
+    public void appendData(DataItem[] dataItems){
+        List<DataItem> list = Arrays.asList(dataItems);
+        appendData(list);
+    }
+
+
+
 
 }
