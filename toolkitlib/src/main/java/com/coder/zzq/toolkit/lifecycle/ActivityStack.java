@@ -2,6 +2,7 @@ package com.coder.zzq.toolkit.lifecycle;
 
 import android.app.Activity;
 
+import com.coder.zzq.toolkit.Utils;
 import com.coder.zzq.toolkit.log.EasyLogger;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public final class ActivityStack {
 
     public static void push(Activity activity) {
         if (activity != null) {
-            EasyLogger.d("push activity : " + activity.hashCode());
+            EasyLogger.d("push activity : " + Utils.getActivityInfo(activity));
             getActivitySet().add(activity);
         }
     }
@@ -36,7 +37,7 @@ public final class ActivityStack {
         for (int index = (num - 1); index >= 0; index--) {
             if (getActivitySet().get(index) == activity) {
                 getActivitySet().remove(index);
-                EasyLogger.d("pop activity : " + activity.hashCode());
+                EasyLogger.d("pop activity : " + Utils.getActivityInfo(activity));
                 break;
             }
         }
