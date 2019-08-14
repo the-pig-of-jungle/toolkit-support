@@ -26,28 +26,17 @@ import com.coder.zzq.toolkit.lifecycle.ActivityStack;
 
 public class Utils {
 
-    private static Application sContext;
-
-
-    public static void init(Application application) {
-        sContext = requireNonNull(application, "application can not null!");
-    }
-
-    public static Application getContext() {
-        return requireNonNull(sContext, "you have not init Utils by invoke method : init(application)");
-    }
-
     public static int dpToPx(float dp) {
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics()));
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Toolkit.getContext().getResources().getDisplayMetrics()));
     }
 
     @ColorInt
     public static int getColorFromRes(@ColorRes int colorRes) {
-        return ContextCompat.getColor(getContext(), colorRes);
+        return ContextCompat.getColor(Toolkit.getContext(), colorRes);
     }
 
     public static LayoutInflater getInflater() {
-        return LayoutInflater.from(getContext());
+        return LayoutInflater.from(Toolkit.getContext());
     }
 
     public static <T> T requireNonNull(T obj, String tip) {
@@ -64,15 +53,15 @@ public class Utils {
     }
 
     public static int screenWidth() {
-        return getContext().getResources().getDisplayMetrics().widthPixels;
+        return Toolkit.getContext().getResources().getDisplayMetrics().widthPixels;
     }
 
 
     public static int getStatusBarHeight() {
-        int resourceId = getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = Toolkit.getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
         int height = 0;
         try {
-            height = getContext().getResources().getDimensionPixelSize(resourceId);
+            height = Toolkit.getContext().getResources().getDimensionPixelSize(resourceId);
         } catch (Resources.NotFoundException e) {
             height = Utils.dpToPx(24);
         }
@@ -81,10 +70,10 @@ public class Utils {
     }
 
     public static int getToolbarHeight() {
-        int resourceId = getContext().getResources().getIdentifier("abc_action_bar_default_height_material", "dimen", "android");
+        int resourceId = Toolkit.getContext().getResources().getIdentifier("abc_action_bar_default_height_material", "dimen", "android");
         int height = 0;
         try {
-            height = getContext().getResources().getDimensionPixelSize(resourceId);
+            height = Toolkit.getContext().getResources().getDimensionPixelSize(resourceId);
         } catch (Resources.NotFoundException e) {
             height = Utils.dpToPx(56);
         }
@@ -106,7 +95,7 @@ public class Utils {
 
     public static void hideKeyboard(View view) {
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) Toolkit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null) {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
@@ -114,7 +103,7 @@ public class Utils {
     }
 
     public static View inflate(@LayoutRes int layoutRes, ViewGroup viewGroup, boolean attach) {
-        return LayoutInflater.from(getContext()).inflate(layoutRes, viewGroup, attach);
+        return LayoutInflater.from(Toolkit.getContext()).inflate(layoutRes, viewGroup, attach);
     }
 
     public static View inflate(@LayoutRes int layoutRes, ViewGroup viewGroup) {
@@ -122,7 +111,7 @@ public class Utils {
     }
 
     public static Drawable getDrawableFromRes(int drawableRes) {
-        return ContextCompat.getDrawable(getContext(), drawableRes);
+        return ContextCompat.getDrawable(Toolkit.getContext(), drawableRes);
     }
 
     public static void setBackgroundDrawable(View view, Drawable drawable) {
@@ -157,20 +146,23 @@ public class Utils {
     }
 
     public static String getStringFromRes(@StringRes int msg) {
-        return getContext().getString(msg);
+        return Toolkit.getContext().getString(msg);
     }
 
     public static float pxToDp(int px) {
-        float scale = getContext().getResources().getDisplayMetrics().density;
+        float scale = Toolkit.getContext().getResources().getDisplayMetrics().density;
         return px / scale;
     }
 
     public static boolean isNotificationPermitted() {
-        return NotificationManagerCompat.from(getContext()).areNotificationsEnabled();
+        return NotificationManagerCompat.from(Toolkit.getContext()).areNotificationsEnabled();
     }
 
     public static int screenHeight() {
-        return getContext().getResources().getDisplayMetrics().heightPixels;
+        return Toolkit.getContext().getResources().getDisplayMetrics().heightPixels;
     }
 
+    public static String getActivityInfo(Activity activity) {
+        return activity == null ? "the activity == null" : activity.getClass().getSimpleName() + "(" + activity.getClass().hashCode() + ")";
+    }
 }
