@@ -3,6 +3,7 @@ package com.coder.zzq.toolkit;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -167,5 +168,18 @@ public class Utils {
 
     public static String getObjectDesc(Object object) {
         return object == null ? "(null)" : "(class:" + object.getClass().getSimpleName() + ";hashcode:" + object.hashCode() + ")";
+    }
+
+    public static int screenOrientation() {
+        return Toolkit.getContext().getResources().getConfiguration()
+                .orientation;
+    }
+
+    public static boolean isScreenLandscape() {
+        return screenOrientation() == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    public static boolean isScreenPortrait() {
+        return screenOrientation() == Configuration.ORIENTATION_PORTRAIT;
     }
 }
