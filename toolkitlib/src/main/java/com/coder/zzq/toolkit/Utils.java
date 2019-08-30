@@ -1,7 +1,6 @@
 package com.coder.zzq.toolkit;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -164,5 +163,9 @@ public class Utils {
 
     public static String getActivityInfo(Activity activity) {
         return activity == null ? "the activity == null" : activity.getClass().getSimpleName() + "(" + activity.getClass().hashCode() + ")";
+    }
+
+    public static String getObjectDesc(Object object) {
+        return object == null ? "(null)" : "(class:" + object.getClass().getSimpleName() + ";hashcode:" + object.hashCode() + ")";
     }
 }
