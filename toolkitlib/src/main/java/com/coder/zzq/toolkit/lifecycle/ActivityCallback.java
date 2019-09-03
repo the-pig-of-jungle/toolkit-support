@@ -63,6 +63,8 @@ public class ActivityCallback implements Application.ActivityLifecycleCallbacks 
         if (activity == mLastVisibleActivity) {
             mLastVisibleActivity = null;
         }
+
+        EasyLogger.d("the activity stack size:" + ActivityStack.count());
     }
 
     public void onAppForeground(boolean restartMainActivity) {
