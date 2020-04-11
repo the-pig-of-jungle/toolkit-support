@@ -182,4 +182,8 @@ public class Utils {
     public static boolean isScreenPortrait() {
         return screenOrientation() == Configuration.ORIENTATION_PORTRAIT;
     }
+
+    public static boolean equals(Object one, Object another) {
+        return (one == another) || (one != null && one.equals(another));
+    }
 }
